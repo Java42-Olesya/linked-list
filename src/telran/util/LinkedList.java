@@ -177,6 +177,7 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
 		int oldSize = size;
+<<<<<<< HEAD
 		Node<T> resNode = tail;
 		for (int i = size - 1; i >= 0; i--) {
 		if (predicate.test(resNode.obj)) {
@@ -184,8 +185,18 @@ public class LinkedList<T> implements List<T> {
 		}
 			resNode = resNode.prev;
 	}
+=======
+		Node<T> resNode = head;
+		while(resNode != null) {
+			if (predicate.test(resNode.obj)) {
+				remove(resNode.obj);
+			}
+			resNode = resNode.next;
+		}
+>>>>>>> refs/heads/homework
 		return oldSize > size;
 	}
+
 
 	@Override
 	public void sort(Comparator<T> comp) {
@@ -196,16 +207,34 @@ public class LinkedList<T> implements List<T> {
 	}
 
 	private T[] listToArray() {
+<<<<<<< HEAD
 		// TODO
 		// creates array of T objects
 		// passes over whole list and fills the array
 		// sorting filled array
 		return null;
+=======
+		@SuppressWarnings("unchecked")
+		T[] array = (T[]) new Object[size];
+		int i = 0;
+		for(Node<T> resNode = head; resNode != null; resNode = resNode.next, i ++) {
+			array[i] = resNode.obj;
+		}
+		return array;
+>>>>>>> refs/heads/homework
 	}
 
 	private void fillListFromArray(T[] array) {
+<<<<<<< HEAD
 		// TODO
 		// passes over whole list and fills elements from index=0 to index=size - 1
+=======
+	
+		Node<T> resNode = head;
+		for(int i = 0; i < size; i ++, resNode = resNode.next) {
+			resNode.obj = array[i];
+		}
+>>>>>>> refs/heads/homework
 	}
 
 }
