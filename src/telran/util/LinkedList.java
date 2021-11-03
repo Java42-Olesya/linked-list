@@ -137,7 +137,6 @@ public class LinkedList<T> implements List<T> {
 		}
 		else if(resNode == head) {
 			removeHead();
-			
 		}
 		else if(resNode == tail) {
 			removeTail();
