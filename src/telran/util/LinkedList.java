@@ -115,27 +115,72 @@ public class LinkedList<T> implements List<T> {
 
 	@Override
 	public T remove(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!isValidIndex(index)) {
+			return null;
+		}
+		Node<T> resNode = getNode(index);
+		T res = resNode.obj;
+		if (head == tail) {
+			head = tail = null;
+
+		} else {
+			if (index == 0) {
+				head = resNode.next;
+				head.prev = null;
+			} else if (index == size - 1) {
+				tail = resNode.prev;
+				tail.next = null;
+
+			} else {
+				resNode.prev.next = resNode.next;
+				resNode.next.prev = resNode.prev;
+			}
+		}
+		size--;
+		return res;
 	}
 
 	@Override
 	public int indexOf(Predicate<T> predicate) {
-		// TODO Auto-generated method stub
-		return 0;
+		int index = -1;
+		Node<T> resNode = head;
+		for (int i = 0; i < size; i++) {
+			if (predicate.test(resNode.obj)) {
+				index = i;
+				break;
+			}
+			resNode = resNode.next;
+		}
+		return index;
 	}
 
 	@Override
 	public int lastIndexOf(Predicate<T> predicate) {
-		// TODO Auto-generated method stub
-		return 0;
+		int index = -1;
+		Node<T> resNode = tail;
+		for (int i = size - 1; i >= 0; i--) {
+			if (predicate.test(resNode.obj)) {
+				index = i;
+				break;
+			}
+			resNode = resNode.prev;
+		}
+		return index;
 	}
 
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
-		// TODO Auto-generated method stub
-		return false;
+		int oldSize = size;
+		Node<T> resNode = head;
+		while(resNode != null) {
+			if (predicate.test(resNode.obj)) {
+				remove(resNode.obj);
+			}
+			resNode = resNode.next;
+		}
+		return oldSize > size;
 	}
+
 
 	@Override
 	public void sort(Comparator<T> comp) {
@@ -146,15 +191,20 @@ public class LinkedList<T> implements List<T> {
 
 	}
 	private T[] listToArray() {
-		//TODO
-		//creates array of T objects
-		//passes over whole list and fills the array
-		//sorting filled array
-		return null;
+		@SuppressWarnings("unchecked")
+		T[] array = (T[]) new Object[size];
+		int i = 0;
+		for(Node<T> resNode = head; resNode != null; resNode = resNode.next, i ++) {
+			array[i] = resNode.obj;
+		}
+		return array;
 	}
 	private void fillListFromArray(T[] array) {
-		//TODO
-		//passes over whole list and fills elements from index=0 to index=size - 1 
+	
+		Node<T> resNode = head;
+		for(int i = 0; i < size; i ++, resNode = resNode.next) {
+			resNode.obj = array[i];
+		}
 	}
 
 }
