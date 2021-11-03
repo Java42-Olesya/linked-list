@@ -130,6 +130,7 @@ public class LinkedList<T> implements List<T> {
 			head = tail = null;
 
 		} else {
+			//[YG] consider introducing additional methods like removeHead, removeTail, removeMiddle(node)
 			if (index == 0) {
 				head = resNode.next;
 				head.prev = null;
