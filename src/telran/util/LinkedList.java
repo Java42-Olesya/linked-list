@@ -90,7 +90,6 @@ public class LinkedList<T> implements List<T> {
 		Node<T> nodeAfter = getNode(index);
 		newNode.next = nodeAfter;
 		newNode.prev = nodeAfter.prev;
-		// nodeAfter.prev => reference to the old previous element
 		nodeAfter.prev.next = newNode;
 		nodeAfter.prev = newNode;
 
@@ -124,26 +123,46 @@ public class LinkedList<T> implements List<T> {
 		if (!isValidIndex(index)) {
 			return null;
 		}
+		
 		Node<T> resNode = getNode(index);
+		return removeNode(resNode);
+
+	}
+	
+
+	private T removeNode(Node<T> resNode) {
 		T res = resNode.obj;
 		if (head == tail) {
 			head = tail = null;
-
-		} else {
-			if (index == 0) {
-				head = resNode.next;
-				head.prev = null;
-			} else if (index == size - 1) {
-				tail = resNode.prev;
-				tail.next = null;
-
-			} else {
-				resNode.prev.next = resNode.next;
-				resNode.next.prev = resNode.prev;
-			}
 		}
-		size--;
+		else if(resNode == head) {
+			removeHead();
+			
+		}
+		else if(resNode == tail) {
+			removeTail();
+		}else {
+			removeMiddle(resNode);
+		}
+		size--;	
 		return res;
+	}
+
+	private void removeMiddle(Node<T> resNode) {
+		resNode.prev.next = resNode.next;
+		resNode.next.prev = resNode.prev;
+		
+	}
+
+	private void removeTail() {
+		tail = tail.prev;
+		tail.next = null;
+		
+	}
+
+	private void removeHead() {
+		head = head.next;
+			head.prev = null;	
 	}
 
 	@Override
@@ -177,15 +196,7 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
 		int oldSize = size;
-<<<<<<< HEAD
-		Node<T> resNode = tail;
-		for (int i = size - 1; i >= 0; i--) {
-		if (predicate.test(resNode.obj)) {
-			remove(i);
-		}
-			resNode = resNode.prev;
-	}
-=======
+
 		Node<T> resNode = head;
 		while(resNode != null) {
 			if (predicate.test(resNode.obj)) {
@@ -193,7 +204,7 @@ public class LinkedList<T> implements List<T> {
 			}
 			resNode = resNode.next;
 		}
->>>>>>> refs/heads/homework
+
 		return oldSize > size;
 	}
 
@@ -207,13 +218,7 @@ public class LinkedList<T> implements List<T> {
 	}
 
 	private T[] listToArray() {
-<<<<<<< HEAD
-		// TODO
-		// creates array of T objects
-		// passes over whole list and fills the array
-		// sorting filled array
-		return null;
-=======
+
 		@SuppressWarnings("unchecked")
 		T[] array = (T[]) new Object[size];
 		int i = 0;
@@ -221,20 +226,16 @@ public class LinkedList<T> implements List<T> {
 			array[i] = resNode.obj;
 		}
 		return array;
->>>>>>> refs/heads/homework
+
 	}
 
 	private void fillListFromArray(T[] array) {
-<<<<<<< HEAD
-		// TODO
-		// passes over whole list and fills elements from index=0 to index=size - 1
-=======
-	
+
 		Node<T> resNode = head;
 		for(int i = 0; i < size; i ++, resNode = resNode.next) {
 			resNode.obj = array[i];
 		}
->>>>>>> refs/heads/homework
+
 	}
 
 }
