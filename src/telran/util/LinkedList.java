@@ -199,7 +199,8 @@ public class LinkedList<T> implements List<T> {
 		Node<T> resNode = head;
 		while(resNode != null) {
 			if (predicate.test(resNode.obj)) {
-				remove(resNode.obj);
+//				remove(resNode.obj);
+				removeNode(resNode);
 			}
 			resNode = resNode.next;
 		}
