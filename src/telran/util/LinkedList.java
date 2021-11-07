@@ -255,6 +255,7 @@ public class LinkedList<T> implements List<T> {
 				return -(index + 1);
 			}else {
 				index++;
+				//[YG] why do you need the following "if" that actually is unneeded statement at each iteration 
 				if (current == tail) {
 					return -(index + 1);
 				}
