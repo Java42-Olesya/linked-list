@@ -245,6 +245,7 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public int sortedSearch(T pattern, Comparator<T> comp) {
 		int index = 0;
+		int indexNotExist = - (size + 1);
 		Node<T> current = head;
 		while (current != null) {
 			int resComp = comp.compare(pattern, current.obj);
@@ -252,16 +253,13 @@ public class LinkedList<T> implements List<T> {
 				return index;
 			}
 			if (resComp < 0) {
-				return -(index + 1);
-			}else {
-				index++;
-				if (current == tail) {
-					return -(index + 1);
-				}
-				current = current.next;	
+				indexNotExist = -(index + 1);
+				break;	
 			}
+			index++;
+			current = current.next;
 		}
-		return index;
+		return indexNotExist;
 	}
 
 	@Override
