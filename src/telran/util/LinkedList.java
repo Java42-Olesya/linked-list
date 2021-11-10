@@ -42,6 +42,7 @@ public class LinkedList<T> implements List<T> {
 		public void remove() {
 //			FIXME
 			if(tail != null  ) {
+				//[YG] "if" in 44 line shouldn't be "tail" can't be null as iterator may remove only being iterated elements
 				if(current == null) {
 					removeNode(tail);
 			}else {
