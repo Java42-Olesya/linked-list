@@ -6,8 +6,7 @@ import java.util.Iterator;
 import java.util.function.Predicate;
 
 public class LinkedList<T> implements List<T> {
-	private int size;
-
+	
 	private static class Node<T> {
 		T obj;
 		Node<T> next;
@@ -17,10 +16,13 @@ public class LinkedList<T> implements List<T> {
 			this.obj = obj;
 		}
 	}
-
-	private Node<T> head; // reference to the first element
-	private Node<T> tail; // reference to the last element
+	
+	private int size;
+	private Node<T> head; 
+	private Node<T> tail; 
+	
 	private class LinkedListIterator implements Iterator<T> {
+		
 		Node<T> current = head;
 		@Override
 		public boolean hasNext() {
@@ -30,20 +32,23 @@ public class LinkedList<T> implements List<T> {
 
 		@Override
 		public T next() {
-			//return current T object
-			T res = current.obj;
 			//FIXME check res and throwing exception
-			//moves to a next current
+			T res = current.obj;
 			current = current.next;
 			return res;
 		}
+		
 		@Override
 		public void remove() {
-			//TODO 
-			//removes element that has been returned by the last next call
-			//that is previous of the current. But if current is null, then tail
-			//should be removed
-			
+//			FIXME
+			if(tail != null  ) {
+				if(current == null) {
+					removeNode(tail);
+			}else {
+				removeNode(current.prev);
+			}
+			}
+		
 		}
 		
 	}
@@ -183,10 +188,18 @@ public class LinkedList<T> implements List<T> {
 
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
-		//O[N]
-		//TODO write removeIf implementation based on iterator 
+		//O[N] 
 		//To apply items a., b., c. in the slide #18 with iterator.remove()
-		return false;
+		int oldSize = size;
+		Iterator<T> iter = iterator();
+		T res = null;
+		while(iter.hasNext()) {
+			res = iter.next();
+			if(predicate.test(res)) {
+				iter.remove();
+			}
+		}
+		return oldSize > size;
 	}
 
 	private T removeNode(Node<T> current) {
